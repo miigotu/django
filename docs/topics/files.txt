@@ -202,3 +202,49 @@ For example, the following code will store uploaded files under
 :doc:`Custom storage systems </howto/custom-file-storage>` work the same way:
 you can pass them in as the ``storage`` argument to a
 :class:`~django.db.models.FileField`.
+
+Using a callable
+---------------------
+
+You can also use a callable as the storage parameter for :class:`~django.db.models.FileField`
+or :class:`~django.db.models.ImageField`. This will allow you to set up storage that depends on
+settings or variables at run time. This is useful for example when your application needs remote
+storage on one deployment, but local storage on another.
+
+#. Your callable must return an instance of :class:`~django.core.files.storage.Storage`. Example::
+
+    from django.core.files.storage import Storage
+    from django.db import models
+
+    class MyLocalStorage(Storage):
+        ....
+
+    class MyRemoteStorage(Storage):
+        ....
+
+    def MyCustomStorage():
+        if ...:
+            return MyRemoteStorage()
+        else:
+            return MyLocalStorage()
+
+    class MyCustomStorage2(Storage):
+        def __init__(self, ...):
+            if...:
+                self.location = ...
+             else:
+                 self.location = ...
+
+             return super(MyCustomStorage2, self).__init__(...)
+
+    class MyCustomStorage3(Storage):
+        # Adding a call method makes the instance callable
+        def __call__(self):
+            if ...:
+                self.location = ...
+            return self
+
+    class MyModel(models.Model):
+        my_file = models.FileField(storage=MyCustomStorage)
+        my_image = models.ImageField(storage=MyCustomStorage2)
+        my_image2 = models.ImageField(storage=MyCustomStorage3())

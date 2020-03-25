@@ -248,6 +248,10 @@ File Storage
 
 * ``FileSystemStorage.save()`` method now supports :class:`pathlib.Path`.
 
+* Added the ability to pass a callable as the storage parameter of a :class:`~django.db.models.FileField`, or
+  :class:`~django.db.models.ImageField`. This can be used to select or set up storage for the field based on settings or variables at runtime.
+  For example, where sometimes you need remote storage and sometimes you need local storage depending on the environment you are deploying to.
+
 File Uploads
 ~~~~~~~~~~~~
 

@@ -94,30 +94,6 @@ Database backends
 
 * Added result streaming for :meth:`.QuerySet.iterator` on SQLite.
 
-Email
-~~~~~
-
-* ...
-
-File Storage
-~~~~~~~~~~~~
-
-* Added the ability to pass a callable as the storage parameter of a :class:`~django.db.models.FileField`, or
-  :class:`~django.db.models.ImageField`. This can be used to select or set up storage for the field based on settings or variables at runtime.
-  For example, where sometimes you need remote storage and sometimes you need local storage depending on the environment you are deploying to.
-  (:ticket:`28184`)
-
-File Uploads
-~~~~~~~~~~~~
-
-* ...
-
-
-Forms
-~~~~~
-
-* ...
-
 Generic Views
 ~~~~~~~~~~~~~
 
